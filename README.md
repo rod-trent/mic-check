@@ -142,15 +142,6 @@ permission + setup policies, updates, and (briefly) public Teams Store submissio
 safe-by-design summary) to hand to whoever administers Teams for your tenant. Grab the
 package from the [latest release](https://github.com/rod-trent/mic-check/releases/latest).
 
-## Before you publish to the Teams Store
-
-- [ ] Replace `color.png` / `outline.png` with real brand artwork.
-- [ ] Host real `privacy.html` and `terms.html` pages (referenced in the manifest).
-- [ ] Fill in `developer.name` / URLs and a stable app `id` (GUID).
-- [ ] Bundle the Teams SDK instead of the CDN reference if your review requires it.
-- [ ] Validate with the [Teams manifest validator](https://dev.teams.microsoft.com/).
-- [ ] Complete Microsoft's store submission + Publisher Attestation.
-
 ## Tier 2 — real "they can hear you" (in progress)
 
 A Graph Communications calling bot with application-hosted media that joins the meeting,
