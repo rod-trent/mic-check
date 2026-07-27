@@ -13,11 +13,19 @@
 #>
 param(
   [Parameter(Mandatory = $true)][string]$BaseUrl,
-  [Parameter(Mandatory = $false)][string]$AppId = [guid]::NewGuid().ToString()
+  [Parameter(Mandatory = $false)][string]$AppId
 )
 
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
+
+# Resolve a STABLE app id: explicit -AppId wins, else .appid.txt (committed),
+# else a fresh GUID (fine for throwaway test packages only).
+if ([string]::IsNullOrWhiteSpace($AppId)) {
+  $idFile = Join-Path $root ".appid.txt"
+  if (Test-Path $idFile) { $AppId = (Get-Content $idFile -Raw).Trim() }
+  else { $AppId = [guid]::NewGuid().ToString() }
+}
 $pkgDir = Join-Path $root "appPackage"
 $build = Join-Path $root "build"
 $staging = Join-Path $build "appPackage"

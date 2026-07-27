@@ -76,11 +76,13 @@ features are inert here, but the meter and verdict work.)
    npm run icons
    ```
 3. **Build the app package**, injecting the base URL (a path segment like the Pages
-   subpath is fine) and a stable app id:
+   subpath is fine):
    ```bash
-   pwsh scripts/package.ps1 -BaseUrl "https://rod-trent.github.io/mic-check" -AppId "<your-guid>"
+   pwsh scripts/package.ps1 -BaseUrl "https://rod-trent.github.io/mic-check"
    ```
-   This writes `build/appPackage.zip`. Omit `-AppId` to auto-generate one for testing.
+   This writes `build/appPackage.zip`. The app id is read from
+   [`.appid.txt`](.appid.txt) (a **stable** GUID — never change it once the app is
+   published) unless you override it with `-AppId "<your-guid>"`.
 4. **Sideload**: Teams → **Apps → Manage your apps → Upload an app → Upload a custom
    app**, pick `build/appPackage.zip`. Add it to a meeting, then open it from the
    meeting toolbar.

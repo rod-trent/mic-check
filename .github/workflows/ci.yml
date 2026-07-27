@@ -21,10 +21,13 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Install validation deps
+        run: pip install jsonschema
+
       - name: Generate icons
         run: python scripts/make-icons.py
 
-      - name: Validate manifest
+      - name: Validate manifest (JSON Schema)
         run: python scripts/validate-manifest.py
 
       - name: Build Teams app package

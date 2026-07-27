@@ -3,7 +3,6 @@
   "manifestVersion": "1.17",
   "version": "1.0.0",
   "id": "{{APP_ID}}",
-  "packageName": "com.canuhearmenow.miccheck",
   "developer": {
     "name": "Can U Hear Me Now",
     "websiteUrl": "{{CONTENT_BASE}}",
@@ -32,15 +31,5 @@
     }
   ],
   "validDomains": ["{{VALID_DOMAIN}}"],
-  "devicePermissions": ["media"],
-  "authorization": {
-    "permissions": {
-      "resourceSpecific": [
-        {
-          "name": "OnlineMeetingParticipant.Read.Chat",
-          "type": "Delegated"
-        }
-      ]
-    }
-  }
+  "devicePermissions": ["media"]
 }
