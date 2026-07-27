@@ -87,6 +87,33 @@ features are inert here, but the meter and verdict work.)
    app**, pick `build/appPackage.zip`. Add it to a meeting, then open it from the
    meeting toolbar.
 
+## Testing in a meeting
+
+Mic Check only appears in a **meeting** context (not 1:1 chats), and you can test it
+solo — Tier 1 just reads your own mic.
+
+1. **Start an instant meeting** — Teams → **Calendar** → **Meet now** → **Start
+   meeting**, and join with your mic on. (No need to invite anyone.)
+2. **Add the app** — in the meeting controls, click **Apps** (or **More (⋯) → Apps**),
+   search **Mic Check**, and **Add**. It opens in the right-hand side panel.
+3. **Run the check** — click **Start mic check**, **Allow** the microphone prompt, and
+   talk normally. The meter should move and flip to **"You're being heard 👍"**; go
+   silent for ~2s and it warns that nothing is coming through.
+
+**Alternative (scheduled meeting):** Calendar → **New meeting** → save with just
+yourself → reopen the event → **＋** near the tabs to add Mic Check ahead of time.
+
+**Troubleshooting**
+
+- **No mic prompt?** It's driven by `devicePermissions: ["media"]`. Check your OS
+  microphone permission for Teams.
+- **No "Apps" button in the meeting?** Adding apps to meetings can be gated by tenant
+  policy (the same admin-settings family that governs custom-app upload) — that's org
+  policy, not the package.
+- **Want to see the cross-side "they can hear you" signal?** That's the Tier 2 media
+  bot (see [Roadmap](#roadmap)); Tier 1 confirms your audio is getting out, which is
+  the real test here.
+
 ## Before you publish to the Teams Store
 
 - [ ] Replace `color.png` / `outline.png` with real brand artwork.
