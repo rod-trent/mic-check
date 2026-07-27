@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mic Check — Privacy</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="theme-default">
+  <main class="panel" role="main">
+    <header class="hdr">
+      <div class="hdr-badge" aria-hidden="true">🔒</div>
+      <div>
+        <h1 class="hdr-title">Privacy Policy</h1>
+        <p class="hdr-sub">Mic Check — Can U Hear Me Now</p>
+      </div>
+    </header>
+    <section class="card">
+      <p class="lead"><strong>Short version: your audio never leaves your device.</strong></p>
+      <p>Mic Check helps you confirm your microphone is producing audio before you speak in a
+        Microsoft Teams meeting. To do that it reads your microphone's input level using your
+        browser's Web Audio API.</p>
+      <h3>What we process</h3>
+      <ul>
+        <li>Live microphone <strong>level</strong> (loudness), computed in-memory only while a
+          check is running.</li>
+      </ul>
+      <h3>What we do NOT do</h3>
+      <ul>
+        <li>We do not record, store, or buffer your audio to disk.</li>
+        <li>We do not transmit audio, transcripts, or level data to any server.</li>
+        <li>We do not use analytics, tracking, cookies, or third-party data sharing.</li>
+      </ul>
+      <h3>Permissions</h3>
+      <p>The app requests microphone access solely to measure input level. Access is released
+        the moment you stop a check or close the panel.</p>
+      <p class="hint">This is an open-source project (MIT). Questions or concerns? Open an issue at
+        <a href="https://github.com/rod-trent/mic-check">github.com/rod-trent/mic-check</a>.</p>
+    </section>
+  </main>
+</body>
+</html>

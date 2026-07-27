@@ -1,0 +1,52 @@
+name: Bug report
+description: Something isn't working as expected
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to file a bug! Please fill out the details below.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of the bug and what you expected instead.
+      placeholder: The verdict stayed on "Listening…" even though the meter was moving.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open the panel in a Teams meeting (or at localhost:3000)
+        2. Click "Start mic check"
+        3. Speak normally
+        4. See ...
+    validations:
+      required: true
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Where did it happen?
+      options:
+        - Teams desktop client
+        - Teams web (browser)
+        - Teams mobile
+        - Local dev (localhost:3000)
+    validations:
+      required: true
+  - type: input
+    id: browser-os
+    attributes:
+      label: Browser / OS
+      placeholder: Edge 126 on Windows 11
+    validations:
+      required: false
+  - type: textarea
+    id: console
+    attributes:
+      label: Console errors (if any)
+      description: Open dev tools and paste any red errors. Do NOT paste audio or personal data.
+      render: shell
+    validations:
+      required: false

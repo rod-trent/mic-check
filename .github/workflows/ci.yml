@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Validate manifest & build app package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Generate icons
+        run: python scripts/make-icons.py
+
+      - name: Validate manifest
+        run: python scripts/validate-manifest.py
+
+      - name: Build Teams app package
+        shell: pwsh
+        run: ./scripts/package.ps1 -BaseUrl "https://example.com/mic-check" -AppId "11111111-1111-1111-1111-111111111111"
+
+      - name: Upload app package
+        uses: actions/upload-artifact@v4
+        with:
+          name: appPackage
+          path: build/appPackage.zip
+          if-no-files-found: error

@@ -2,13 +2,13 @@
   "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.17/MicrosoftTeams.schema.json",
   "manifestVersion": "1.17",
   "version": "1.0.0",
-  "id": "REPLACE_WITH_YOUR_APP_GUID",
+  "id": "{{APP_ID}}",
   "packageName": "com.canuhearmenow.miccheck",
   "developer": {
     "name": "Can U Hear Me Now",
-    "websiteUrl": "https://REPLACE_WITH_YOUR_HOST",
-    "privacyUrl": "https://REPLACE_WITH_YOUR_HOST/privacy.html",
-    "termsOfUseUrl": "https://REPLACE_WITH_YOUR_HOST/terms.html"
+    "websiteUrl": "{{CONTENT_BASE}}",
+    "privacyUrl": "{{CONTENT_BASE}}/privacy.html",
+    "termsOfUseUrl": "{{CONTENT_BASE}}/terms.html"
   },
   "name": {
     "short": "Mic Check",
@@ -25,13 +25,13 @@
   "accentColor": "#5B5FC7",
   "configurableTabs": [
     {
-      "configurationUrl": "https://REPLACE_WITH_YOUR_HOST/config.html",
+      "configurationUrl": "{{CONTENT_BASE}}/config.html",
       "canUpdateConfiguration": false,
       "scopes": ["groupChat"],
       "context": ["meetingSidePanel", "meetingChatTab", "meetingDetailsTab"]
     }
   ],
-  "validDomains": ["REPLACE_WITH_YOUR_HOST"],
+  "validDomains": ["{{VALID_DOMAIN}}"],
   "devicePermissions": ["media"],
   "authorization": {
     "permissions": {

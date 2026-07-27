@@ -1,8 +1,16 @@
 # Can U Hear Me Now — Teams Mic Check
 
+[![CI](https://github.com/rod-trent/mic-check/actions/workflows/ci.yml/badge.svg)](https://github.com/rod-trent/mic-check/actions/workflows/ci.yml)
+[![Deploy demo](https://github.com/rod-trent/mic-check/actions/workflows/pages.yml/badge.svg)](https://github.com/rod-trent/mic-check/actions/workflows/pages.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 An in-meeting Microsoft Teams side panel that kills the "can you hear me?" ritual.
 Open the panel, run a two-second check, and get a clear verdict — **"You're being heard 👍"** —
 with a live input-level meter, before you ever speak up.
+
+![Mic Check panel showing a green "You're being heard" verdict above a live input-level meter](docs/screenshot.svg)
+
+**▶ Live demo:** [rod-trent.github.io/mic-check](https://rod-trent.github.io/mic-check/) — try the meter right in your browser (no Teams needed).
 
 > **Tier 1 (this build):** confirms *your own* mic is producing audio, analyzed locally
 > via the Web Audio API. Nothing is recorded or uploaded.
@@ -59,17 +67,20 @@ features are inert here, but the meter and verdict work.)
 
 ## Build the Teams package
 
-1. **Host the `src/` files** on an HTTPS origin (Azure Static Web Apps, GitHub Pages,
-   or a dev tunnel like `devtunnel host` / ngrok for testing).
+1. **Host the `src/` files** on an HTTPS origin. The included
+   [Pages workflow](.github/workflows/pages.yml) already publishes them to
+   `https://rod-trent.github.io/mic-check/` — or use Azure Static Web Apps or a dev
+   tunnel like `devtunnel host` / ngrok for testing.
 2. **Generate icons** (first time only):
    ```bash
    npm run icons
    ```
-3. **Build the app package**, injecting your host and a generated app id:
+3. **Build the app package**, injecting the base URL (a path segment like the Pages
+   subpath is fine) and a stable app id:
    ```bash
-   pwsh scripts/package.ps1 -Host "your-host.example.com"
+   pwsh scripts/package.ps1 -BaseUrl "https://rod-trent.github.io/mic-check" -AppId "<your-guid>"
    ```
-   This writes `build/appPackage.zip`.
+   This writes `build/appPackage.zip`. Omit `-AppId` to auto-generate one for testing.
 4. **Sideload**: Teams → **Apps → Manage your apps → Upload an app → Upload a custom
    app**, pick `build/appPackage.zip`. Add it to a meeting, then open it from the
    meeting toolbar.

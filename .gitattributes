@@ -1,0 +1,21 @@
+# Normalize line endings: check in as LF, check out native.
+* text=auto eol=lf
+
+# Scripts that Windows tooling prefers with CRLF
+*.ps1 text eol=crlf
+
+# Binary assets — never touch
+*.png binary
+*.jpg binary
+*.gif binary
+*.ico binary
+*.zip binary
+
+# Language hints for GitHub Linguist / diffs
+*.js   text
+*.css  text
+*.html text
+*.json text
+*.md   text
+*.py   text eol=lf
+*.yml  text eol=lf
