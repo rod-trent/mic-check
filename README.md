@@ -123,6 +123,11 @@ optionally **auto-installed and pinned** so it's always present — see
 **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)**. It covers the org app catalog upload, app
 permission + setup policies, updates, and (briefly) public Teams Store submission.
 
+**No Teams admin rights?** Org publishing requires a Teams Administrator. Use
+**[docs/ADMIN_REQUEST.md](docs/ADMIN_REQUEST.md)** — a ready-to-send request (with the
+safe-by-design summary) to hand to whoever administers Teams for your tenant. Grab the
+package from the [latest release](https://github.com/rod-trent/mic-check/releases/latest).
+
 ## Before you publish to the Teams Store
 
 - [ ] Replace `color.png` / `outline.png` with real brand artwork.
