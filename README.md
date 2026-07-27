@@ -27,6 +27,8 @@ with a live input-level meter, before you ever speak up.
 - 🌗 **Theme-aware** — matches Teams light / dark / high-contrast.
 - 📡 **Best-effort Teams signal** — if the meeting exposes it, shows Teams' own
   "you're speaking" confirmation as a second data point.
+- 📌 **Two surfaces** — an in-meeting **side panel** and a **personal tab** you can pin
+  in the Teams app bar for a mic check anytime, in or out of a meeting.
 - 🔒 **Private by design** — audio never leaves the panel; no recording, no upload.
 
 ## Why not just "listen to both sides"?
@@ -113,6 +115,13 @@ yourself → reopen the event → **＋** near the tabs to add Mic Check ahead o
 - **Want to see the cross-side "they can hear you" signal?** That's the Tier 2 media
   bot (see [Roadmap](#roadmap)); Tier 1 confirms your audio is getting out, which is
   the real test here.
+
+## Deploying to your organization
+
+Sideloading is per-user and for testing only. To roll Mic Check out to your whole org —
+optionally **auto-installed and pinned** so it's always present — see
+**[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)**. It covers the org app catalog upload, app
+permission + setup policies, updates, and (briefly) public Teams Store submission.
 
 ## Before you publish to the Teams Store
 

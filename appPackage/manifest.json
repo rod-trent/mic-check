@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.17/MicrosoftTeams.schema.json",
   "manifestVersion": "1.17",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "id": "{{APP_ID}}",
   "developer": {
     "name": "Rod Trent",
@@ -22,6 +22,15 @@
     "outline": "outline.png"
   },
   "accentColor": "#5B5FC7",
+  "staticTabs": [
+    {
+      "entityId": "mic-check-personal",
+      "name": "Mic Check",
+      "contentUrl": "{{CONTENT_BASE}}/index.html",
+      "websiteUrl": "{{CONTENT_BASE}}/index.html",
+      "scopes": ["personal"]
+    }
+  ],
   "configurableTabs": [
     {
       "configurationUrl": "{{CONTENT_BASE}}/config.html",
