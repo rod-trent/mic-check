@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "id": "{{APP_ID}}",
   "developer": {
-    "name": "Can U Hear Me Now",
-    "websiteUrl": "{{CONTENT_BASE}}",
+    "name": "Rod Trent",
+    "websiteUrl": "https://github.com/rod-trent/mic-check",
     "privacyUrl": "{{CONTENT_BASE}}/privacy.html",
     "termsOfUseUrl": "{{CONTENT_BASE}}/terms.html"
   },
