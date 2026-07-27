@@ -89,6 +89,20 @@ features are inert here, but the meter and verdict work.)
    app**, pick `build/appPackage.zip`. Add it to a meeting, then open it from the
    meeting toolbar.
 
+### Cutting a release
+
+The [release workflow](.github/workflows/release.yml) builds the package and attaches
+it to a GitHub Release automatically when you push a version tag:
+
+```bash
+# bump "version" in appPackage/manifest.json first (must match the tag)
+git tag v1.2.0 && git push origin v1.2.0
+```
+
+The workflow fails fast if the tag doesn't match the manifest `version`, so releases and
+manifests never drift apart. Grab any build from the
+[Releases page](https://github.com/rod-trent/mic-check/releases).
+
 ## Testing in a meeting
 
 Mic Check only appears in a **meeting** context (not 1:1 chats), and you can test it

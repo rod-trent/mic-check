@@ -1,0 +1,60 @@
+name: Release
+
+# Push a version tag (e.g. v1.2.0) to build the Teams package and attach it to a
+# GitHub Release automatically:
+#   git tag v1.2.0 && git push origin v1.2.0
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build & attach app package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install validation deps
+        run: pip install jsonschema
+
+      - name: Check tag matches manifest version
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          VER=$(python -c "import json; print(json.load(open('appPackage/manifest.json'))['version'])")
+          if [ "$TAG" != "$VER" ]; then
+            echo "::error::Tag v$TAG does not match manifest version $VER. Bump appPackage/manifest.json 'version' to match the tag."
+            exit 1
+          fi
+          echo "Tag matches manifest version $VER"
+
+      - name: Generate icons
+        run: python scripts/make-icons.py
+
+      - name: Validate manifest (JSON Schema)
+        run: python scripts/validate-manifest.py
+
+      - name: Build Teams app package
+        shell: pwsh
+        run: ./scripts/package.ps1 -BaseUrl "https://rod-trent.github.io/mic-check"
+
+      - name: Publish release with package
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            echo "Release exists — updating asset."
+            gh release upload "$GITHUB_REF_NAME" build/appPackage.zip --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" build/appPackage.zip \
+              --title "Mic Check $GITHUB_REF_NAME" \
+              --generate-notes
+          fi
