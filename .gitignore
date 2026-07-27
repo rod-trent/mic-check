@@ -5,6 +5,10 @@ build/
 # Dependencies
 node_modules/
 
+# .NET build output (bot/)
+bin/
+obj/
+
 # Editor / OS
 .vscode/
 .idea/

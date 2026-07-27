@@ -1,0 +1,112 @@
+// ============================================================================================
+//  GraphMediaSource — ILLUSTRATIVE SAMPLE (not compiled by the main project)
+// --------------------------------------------------------------------------------------------
+//  This is the Windows-only piece that actually captures per-participant audio. It runs on the
+//  media VM/VMSS, joins meetings with application-hosted media, receives each participant's
+//  UNMIXED audio, and feeds AudioFrames into the same AudioPipeline the mock source uses.
+//
+//  It is saved as ".cs.sample" so `dotnet build` of MicCheckBot.csproj stays green. To use it,
+//  create a separate Windows project (see README.md in this folder), reference the Graph
+//  Communications Calling + Media SDKs, and rename to GraphMediaSource.cs.
+//
+//  API surface below follows the Microsoft.Graph.Communications.Calling.* samples; exact type
+//  names/namespaces vary by SDK version — treat this as the shape, not copy-paste-ready code.
+// ============================================================================================
+
+#if MEDIA_PLATFORM   // guard so this never compiles accidentally
+
+using Microsoft.Graph.Communications.Calling;
+using Microsoft.Graph.Communications.Calling.Media;
+using Microsoft.Graph.Communications.Client;
+using Microsoft.Skype.Bots.Media;
+using MicCheckBot.Audio;
+
+namespace MicCheckBot.MediaPlatform;
+
+public sealed class GraphMediaSource
+{
+    private readonly ICommunicationsClient _client;
+    private readonly AudioPipeline _pipeline;
+
+    public GraphMediaSource(ICommunicationsClient client, AudioPipeline pipeline)
+    {
+        _client = client;
+        _pipeline = pipeline;
+        _client.Calls().OnIncoming += OnIncomingCall;   // when the bot is added to a meeting
+    }
+
+    // Called by CallsController -> media module when the panel asks the bot to join.
+    public async Task JoinAsync(string meetingJoinUrl)
+    {
+        var joinInfo = JoinInfo.ParseJoinURL(meetingJoinUrl);            // chatInfo + meetingInfo
+        var mediaSession = CreateMediaSession();
+        var joinParams = new JoinMeetingParameters(joinInfo.Item1, joinInfo.Item2, mediaSession);
+        await _client.Calls().AddAsync(joinParams);
+    }
+
+    private void OnIncomingCall(object sender, CollectionEventArgs<ICall> args)
+    {
+        foreach (var call in args.AddedResources)
+        {
+            var mediaSession = CreateMediaSession();
+            _ = call.AnswerAsync(mediaSession);
+            WireParticipantNames(call);
+        }
+    }
+
+    // Build a local media session that RECEIVES unmixed audio at 16 kHz PCM.
+    private ILocalMediaSession CreateMediaSession()
+    {
+        var audioSocketSettings = new AudioSocketSettings
+        {
+            StreamDirections = StreamDirection.Recvonly,
+            SupportedAudioFormat = AudioFormat.Pcm16K,
+            ReceiveUnmixedMeetingAudio = true,   // <-- per-participant audio
+        };
+
+        var session = _client.CreateMediaSession(audioSocketSettings);
+        session.AudioSocket.AudioMediaReceived += (_, e) => OnAudioReceived(session, e);
+        return session;
+    }
+
+    private void OnAudioReceived(ILocalMediaSession session, AudioMediaReceivedEventArgs e)
+    {
+        try
+        {
+            // Each unmixed buffer carries an ActiveSpeakerId identifying the participant.
+            foreach (var buffer in e.Buffer.UnmixedAudioBuffers)
+            {
+                var samples = CopyPcm16(buffer.Data, buffer.Length);
+                var participant = ResolveParticipant(session, buffer.ActiveSpeakerId);
+
+                _ = _pipeline.ProcessAsync(new AudioFrame(
+                    MeetingId: MeetingIdFor(session),
+                    ParticipantId: participant.Id,
+                    DisplayName: participant.Name,
+                    Samples: samples,
+                    SampleRate: 16000));
+            }
+        }
+        finally
+        {
+            e.Buffer.Dispose();   // MUST dispose the native buffer
+        }
+    }
+
+    private static short[] CopyPcm16(nint data, long length)
+    {
+        var count = (int)(length / sizeof(short));
+        var samples = new short[count];
+        System.Runtime.InteropServices.Marshal.Copy(data, samples, 0, count);
+        return samples;
+    }
+
+    // --- correlation helpers (see docs/TIER2.md "Correlation") --------------------------------
+    private static (string Id, string Name) ResolveParticipant(ILocalMediaSession session, uint activeSpeakerId)
+        => (activeSpeakerId.ToString(), "participant");   // TODO: map MSI -> AAD id via call.Participants
+
+    private static string MeetingIdFor(ILocalMediaSession session) => "TODO-thread-or-meeting-id";
+    private static void WireParticipantNames(ICall call) { /* subscribe to call.Participants updates */ }
+}
+
+#endif

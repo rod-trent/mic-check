@@ -1,0 +1,29 @@
+{
+  "_comment": "REFERENCE ONLY — do NOT merge into manifest.json until the calling bot is registered in Azure. These are the properties Tier 2 adds: a calling bot, the AAD app link, and meeting RSC read permissions. Replace {{BOT_ID}} with the bot's Azure AD app id. See docs/TIER2.md.",
+
+  "bots": [
+    {
+      "botId": "{{BOT_ID}}",
+      "scopes": ["groupChat"],
+      "supportsCalling": true,
+      "supportsVideo": false,
+      "isNotificationOnly": true
+    }
+  ],
+
+  "webApplicationInfo": {
+    "id": "{{BOT_ID}}",
+    "resource": "https://RscBasedStoreApp"
+  },
+
+  "authorization": {
+    "permissions": {
+      "resourceSpecific": [
+        { "name": "OnlineMeeting.ReadBasic.Chat", "type": "Application" },
+        { "name": "OnlineMeetingParticipant.Read.Chat", "type": "Application" }
+      ]
+    }
+  },
+
+  "_note_application_permissions": "The media capabilities (joining a call, accessing media) are AAD *application* permissions granted via admin consent in Azure, NOT via this manifest: Calls.JoinGroupCall.All and Calls.AccessMedia.All. See docs/TIER2.md → 'Azure setup'."
+}

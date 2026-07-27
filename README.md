@@ -151,14 +151,22 @@ package from the [latest release](https://github.com/rod-trent/mic-check/release
 - [ ] Validate with the [Teams manifest validator](https://dev.teams.microsoft.com/).
 - [ ] Complete Microsoft's store submission + Publisher Attestation.
 
-## Roadmap
+## Tier 2 — real "they can hear you" (in progress)
 
-**Tier 2 — real "they can hear you":** add a Graph Communications calling bot with
-application-hosted media that joins the meeting, runs voice-activity detection on each
-participant's incoming audio, and pushes per-user "you're being heard" status to this
-panel over a websocket. Requires Azure VM/VMSS hosting, a media endpoint + certificate,
-and admin consent for the bot. The panel here is already structured to consume that
-signal (see `wireTeamsSpeakingSignal` as the seam).
+A Graph Communications calling bot with application-hosted media that joins the meeting,
+runs voice-activity detection on each participant's incoming audio, and pushes per-user
+"the meeting is receiving your audio ✅" status to the panel over SignalR.
+
+The foundation is in the repo and **runs locally with a mock — no Azure required**:
+
+- [`bot/`](bot) — cross-platform .NET 9 signaling service (SignalR hub, VAD, audio
+  pipeline, mock source). `cd bot && dotnet run`.
+- [`bot/media-platform/`](bot/media-platform) — the Windows-only media capture (sample).
+- [`src/tier2.js`](src/tier2.js) — panel client (off unless a bot URL is set).
+
+See **[docs/TIER2.md](docs/TIER2.md)** for the architecture, the local demo, and the full
+Azure setup (AD app + `Calls.AccessMedia.All` admin consent, bot registration, media VM +
+certificate).
 
 ## Privacy
 

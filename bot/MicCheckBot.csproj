@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <!--
+    MicCheckBot — Tier 2 signaling + presence service.
+
+    This project intentionally references ONLY the ASP.NET Core shared framework, so it
+    restores and builds with no external NuGet packages and runs cross-platform. It
+    contains everything except the Windows-only media platform: the SignalR hub the
+    panel connects to, the calling webhook, the VAD, the audio pipeline, and a mock
+    audio source for local end-to-end testing.
+
+    The real per-participant audio capture lives in ../media-platform (Windows + the
+    Graph Communications Media SDK) and feeds AudioFrames into the same AudioPipeline.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>MicCheckBot</RootNamespace>
+    <AssemblyName>MicCheckBot</AssemblyName>
+  </PropertyGroup>
+
+</Project>
