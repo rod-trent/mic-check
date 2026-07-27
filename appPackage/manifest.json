@@ -1,0 +1,46 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.17/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.17",
+  "version": "1.0.0",
+  "id": "REPLACE_WITH_YOUR_APP_GUID",
+  "packageName": "com.canuhearmenow.miccheck",
+  "developer": {
+    "name": "Can U Hear Me Now",
+    "websiteUrl": "https://REPLACE_WITH_YOUR_HOST",
+    "privacyUrl": "https://REPLACE_WITH_YOUR_HOST/privacy.html",
+    "termsOfUseUrl": "https://REPLACE_WITH_YOUR_HOST/terms.html"
+  },
+  "name": {
+    "short": "Mic Check",
+    "full": "Mic Check — Can U Hear Me Now"
+  },
+  "description": {
+    "short": "Confirm your mic is being heard before you speak up.",
+    "full": "Mic Check adds an in-meeting panel that confirms your microphone is producing audio — so you never have to open with \"can you hear me?\" again. Run a two-second local check and see a live level meter plus a clear \"you're being heard\" verdict. Audio is analyzed entirely on your device; nothing is recorded or uploaded."
+  },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
+  "accentColor": "#5B5FC7",
+  "configurableTabs": [
+    {
+      "configurationUrl": "https://REPLACE_WITH_YOUR_HOST/config.html",
+      "canUpdateConfiguration": false,
+      "scopes": ["groupChat"],
+      "context": ["meetingSidePanel", "meetingChatTab", "meetingDetailsTab"]
+    }
+  ],
+  "validDomains": ["REPLACE_WITH_YOUR_HOST"],
+  "devicePermissions": ["media"],
+  "authorization": {
+    "permissions": {
+      "resourceSpecific": [
+        {
+          "name": "OnlineMeetingParticipant.Read.Chat",
+          "type": "Delegated"
+        }
+      ]
+    }
+  }
+}

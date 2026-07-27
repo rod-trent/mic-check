@@ -1,0 +1,11 @@
+{
+  "name": "can-u-hear-me-now",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Teams in-meeting Mic Check panel — confirm you're being heard before you speak.",
+  "scripts": {
+    "dev": "npx --yes serve src -l 3000",
+    "icons": "python scripts/make-icons.py",
+    "package": "pwsh scripts/package.ps1"
+  }
+}

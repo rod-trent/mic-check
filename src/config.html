@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add Mic Check</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://res.cdn.office.net/teams-js/2.19.0/js/MicrosoftTeams.min.js"></script>
+</head>
+<body class="theme-default">
+  <main class="panel" role="main">
+    <header class="hdr">
+      <div class="hdr-badge" aria-hidden="true">🎤</div>
+      <div>
+        <h1 class="hdr-title">Mic Check</h1>
+        <p class="hdr-sub">Adds a "can they hear me?" panel to this meeting.</p>
+      </div>
+    </header>
+    <section class="card">
+      <p class="lead">
+        Once added, open the panel from the meeting toolbar and run a two-second check to confirm
+        your voice is getting through — no more "can you hear me?"
+      </p>
+      <p class="hint">Nothing is recorded. Audio is analyzed locally in the panel.</p>
+    </section>
+  </main>
+
+  <script>
+    (async () => {
+      const teams = window.microsoftTeams;
+      await teams.app.initialize();
+      const ctx = await teams.app.getContext();
+      const theme = ctx.app.theme;
+      document.body.className =
+        theme === "dark" ? "theme-dark" : theme === "contrast" ? "theme-contrast" : "theme-default";
+
+      const base = window.location.origin + window.location.pathname.replace(/config\.html$/, "");
+
+      teams.pages.config.registerOnSaveHandler((saveEvent) => {
+        teams.pages.config.setConfig({
+          contentUrl: base + "index.html",
+          websiteUrl: base + "index.html",
+          suggestedDisplayName: "Mic Check",
+          entityId: "mic-check-panel",
+        }).then(() => saveEvent.notifySuccess())
+          .catch(() => saveEvent.notifyFailure("Could not save configuration"));
+      });
+
+      teams.pages.config.setValidityState(true);
+    })();
+  </script>
+</body>
+</html>

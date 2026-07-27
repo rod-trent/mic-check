@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' https://res.cdn.office.net; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self';" />
+  <title>Can U Hear Me Now — Mic Check</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Microsoft Teams JS SDK (pinned) -->
+  <script src="https://res.cdn.office.net/teams-js/2.19.0/js/MicrosoftTeams.min.js"></script>
+</head>
+<body class="theme-default">
+  <main class="panel" role="main">
+    <header class="hdr">
+      <div class="hdr-badge" aria-hidden="true">🎤</div>
+      <div>
+        <h1 class="hdr-title">Mic Check</h1>
+        <p class="hdr-sub">Confirm you're being heard — before you ask.</p>
+      </div>
+    </header>
+
+    <section id="idle" class="card">
+      <p class="lead">Run a two-second check. If the meter moves when you talk, the meeting is picking up your voice.</p>
+      <button id="startBtn" class="btn btn-primary" type="button">Start mic check</button>
+      <p id="permHint" class="hint" hidden>
+        We need microphone access to read your input level. Nothing is recorded or sent anywhere.
+      </p>
+    </section>
+
+    <section id="live" class="card" hidden>
+      <div class="verdict" id="verdict" data-state="waiting">
+        <span class="verdict-dot" aria-hidden="true"></span>
+        <span class="verdict-text" id="verdictText">Listening…</span>
+      </div>
+
+      <div class="meter" role="meter" aria-label="Microphone input level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="meter">
+        <div class="meter-fill" id="meterFill"></div>
+        <div class="meter-threshold" aria-hidden="true"></div>
+      </div>
+      <div class="meter-scale" aria-hidden="true"><span>quiet</span><span>good</span><span>loud</span></div>
+
+      <p class="teams-signal" id="teamsSignal" hidden>
+        <span class="ts-dot" aria-hidden="true"></span>
+        <span id="teamsSignalText">Teams confirms you're speaking</span>
+      </p>
+
+      <div class="live-actions">
+        <button id="stopBtn" class="btn btn-ghost" type="button">Done</button>
+        <span class="device" id="deviceName"></span>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <p id="statusLine" class="status">Ready.</p>
+      <p class="privacy">🔒 Audio is analyzed locally in this panel. Never recorded, never uploaded.</p>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
